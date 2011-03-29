@@ -1,0 +1,79 @@
+\documentclass{beamer}
+% Class options include: notes, notesonly, handout, trans,
+%                        hidesubsections, shadesubsections,
+%                        inrow, blue, red, grey, brown
+
+% Theme for beamer presentation.
+\usepackage{beamerthemesplit} 
+%\usepackage{amsmath,amssymb}
+\usepackage{url}
+\usepackage[brazil]{babel}
+\usepackage[latin1]{inputenc}
+
+
+\title{Concorrência em Ada}    % Enter your title between curly braces
+\author{Antonio Carlos, Claudinei e Tiago}                 % Enter your name between curly braces
+\institute{Departamento de Informática \\ Universidade Federal do Paraná}      % Enter your institute name between curly braces
+\date{\today}     
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\section[Outline]{}
+
+% Creates table of contents slide incorporating
+% all \section and \subsection commands
+\begin{frame}
+  \tableofcontents
+\end{frame}
+
+\section{Introdução}
+
+\begin{frame}
+ \frametitle{Introdução}
+ 	
+	Ada suporta programação concorrente em nível de linguagem.
+	\begin{itemize}
+		\item Melhor utilização do processador. Evita ociosidade durante operações de IO.
+		\item Permitir que mais de um processador resolva o problema.
+		\item Modelar paralelismo no mundo real. Por exemplo, aplicações em tempo real e sistemas embarcados..
+	\end{itemize}
+
+\end{frame}
+  
+\section{Task}
+
+\begin{frame}
+ \frametitle{Task}
+ 
+  Nome dado as atividades concorrentes em Ada.
+  Cada \textit{Task} possui sua própria \textit{thread} de controle.
+
+\end{frame}
+
+\subsection{Declaração}
+  \begin{frame}
+     
+    \frametitle{Declaração}
+      \begin{block}{}
+	  	procedure blablabla
+			task A;
+			task B;
+		end;
+      \end{block}
+      
+
+  \end{frame}
+  
+  
+\subsection{Comportamento}
+  \begin{frame}
+    \frametitle{Comportamento}
+  \end{frame}
+
+
+
+\end{document}
