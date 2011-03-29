@@ -6,19 +6,23 @@ WITH Ada.Numerics.Discrete_Random;
 
 procedure Teste_Pilha is
 
-    type buffer is array(0..10) of integer;
+	BUFFER_SIZE: constant := 11; 
+    type buffer is array(0..(BUFFER_SIZE-1)) of integer;
+	type CondicaoPilha is (Vazia, Normal, Cheia);
+	cond: CondicaoPilha;
 
-    type Rand_Range is range 0..100;
+
+
+    type Rand_Range is range 0..100; 
     package Rand_Int is new Ada.Numerics.Discrete_Random(Rand_Range);
     seed : Rand_Int.Generator;
     num : Rand_Range;
     valor: integer;
-    tam_pilha : integer;
 
     task type Pilha is
         entry Empilha(item: in integer);
         entry Desempilha(item: out integer);
-        entry Tamanho(num: out integer);
+        entry Status(cond: out CondicaoPilha);
     end Pilha;
 
     task body Pilha is
@@ -26,17 +30,22 @@ procedure Teste_Pilha is
         buf: buffer;
         stack: integer := 0;
 
+		procedure Imprime_Pilha is
+		begin
+            Put("Pilha:");
+            for i in 0..(stack - 1) loop
+               Put(buf(i));
+            end loop;
+            New_line;
+		end Imprime_Pilha;
+
         begin loop
             select
                 when stack < size_buf => accept Empilha(item: in integer)
                 do
                     buf(stack) := item;
                     stack := stack + 1;
-                    Put("Pilha:");
-                    for i in 1..(stack - 1) loop
-                        Put(buf(i));
-                    end loop;
-                    New_line;
+					Imprime_Pilha;
                     delay 1.0;
                 end;
             or
@@ -44,20 +53,20 @@ procedure Teste_Pilha is
                 do
                     stack := stack - 1;
                     item := buf(stack);
-                    Put("Pilha:");
-                    for i in 1..(stack - 1) loop
-                        Put(buf(i));
-                    end loop;
-                    New_line;
+					Imprime_Pilha;
                     delay 1.0;
                  end;
             or
-                when stack >= 0 => accept Tamanho(num: out integer)
+                accept Status(cond: out CondicaoPilha)
                 do
-                    num := stack;
+                    if stack <= 0 then
+						cond := Vazia;
+					elsif stack >= BUFFER_SIZE then
+						cond := Cheia;
+					else
+						cond := Normal;
+					end if;
                 end;
-            else
-                null;
             end select;
         end loop;
     end; -- End task Pilha
@@ -70,13 +79,13 @@ procedure Teste_Pilha is
             num := Rand_Int.Random(seed);
             if (num mod 2) = 1 then
                 valor := Standard.Integer(num);
-                P.tamanho(tam_pilha);
-                if tam_pilha < 11 then
+                P.status(cond);
+                if cond /= Cheia then
                   P.Empilha(valor);
                 end if;
             else
-                P.tamanho(tam_pilha);
-                if tam_pilha > 0 then
+                P.status(cond);
+                if cond /= Vazia then
                    P.Desempilha(valor);
                 end if;
             end if;
