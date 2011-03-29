@@ -6,14 +6,12 @@ WITH Ada.Numerics.Discrete_Random;
 
 procedure Teste_Pilha is
 
-	BUFFER_SIZE: constant := 11; 
+    BUFFER_SIZE: constant := 11;
     type buffer is array(0..(BUFFER_SIZE-1)) of integer;
-	type CondicaoPilha is (Vazia, Normal, Cheia);
-	cond: CondicaoPilha;
+    type CondicaoPilha is (Vazia, Normal, Cheia);
+    cond: CondicaoPilha;
 
-
-
-    type Rand_Range is range 0..100; 
+    type Rand_Range is range 0..100;
     package Rand_Int is new Ada.Numerics.Discrete_Random(Rand_Range);
     seed : Rand_Int.Generator;
     num : Rand_Range;
@@ -45,7 +43,7 @@ procedure Teste_Pilha is
                 do
                     buf(stack) := item;
                     stack := stack + 1;
-					Imprime_Pilha;
+                    Imprime_Pilha;
                     delay 1.0;
                 end;
             or
@@ -53,7 +51,7 @@ procedure Teste_Pilha is
                 do
                     stack := stack - 1;
                     item := buf(stack);
-					Imprime_Pilha;
+                    Imprime_Pilha;
                     delay 1.0;
                  end;
             or
