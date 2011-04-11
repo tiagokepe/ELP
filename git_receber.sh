@@ -5,6 +5,6 @@ REPOSITORIO=<user>
 
 git checkout master
 git pull
-git merge $REPOSITORIO
-git push
+git checkout $REPOSITORIO
+git rebase master
 
