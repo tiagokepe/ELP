@@ -1,70 +1,70 @@
 #!/usr/bin/ruby
 
-class Tarefa
+class Ingrediente
 	def initialize(nome)
 		@nome= nome
 	end
 
 
-	def duracao
+	def preco
 		0.0
 	end
 end
 
 
 
-class AdicionarVodka < Tarefa
+class Vodka < Ingrediente
 	
 	def initialize
-		super('Adicionar Vodka')
+		super('Vodka')
 	end
 
-	def duracao
+	def preco
 		2.0
 	end
 end
 
-class AdicionarFruta < Tarefa
+class Fruta < Ingrediente
 	
 	def initialize
-		super('Adicionar Fruta')
+		super('Fruta')
 	end
 
 
-	def duracao
+	def preco
 		3.0
 	end
 end
 
-class AdicionarGelo < Tarefa
+class Gelo < Ingrediente
 	
 	def initialize
-		super('Adicionar Gelo')
+		super('Gelo')
 	end
 
 
-	def duracao
+	def preco
 		0.5
 	end
 end
-class Enfeitar < Tarefa
+class GuardaChuva < Ingrediente
 	
 	def initialize
-		super('Enfeitar')
+		super('Guarda Chuva')
 	end
 
-	def duracao
+	def preco
 		1.0
 	end
 end
 
-class Misturar < Tarefa
+class Azeitona < Ingrediente
 	
 	def initialize
-		super('Misturar')
+		super('Azeitona')
 	end
 
-	def duracao
+	def preco
 		5.0
 	end
 
