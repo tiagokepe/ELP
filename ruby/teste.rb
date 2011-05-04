@@ -9,4 +9,4 @@ require 'tarefa_composta.rb'
 @drink.adicionar_subingrediente(Gelo.new)
 @drink.adicionar_subingrediente(Azeitona.new)
 
-puts @drink.preco(23)
+puts @drink.total
