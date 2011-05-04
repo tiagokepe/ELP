@@ -3,6 +3,10 @@
 require 'tarefa_composta.rb'
 
 
-@drink = EntregarDrink.new
+@drink = Drink.new
 
-puts @drink.duracao
+@drink.adicionar_subingrediente(Vodka.new)
+@drink.adicionar_subingrediente(Gelo.new)
+@drink.adicionar_subingrediente(Azeitona.new)
+
+puts @drink.preco(23)
