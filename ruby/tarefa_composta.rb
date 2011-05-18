@@ -8,56 +8,49 @@ class Composto < Ingrediente
 	
 	include Observable
 
-	attr_reader :subingredientes, :preco
+	attr_reader :subingredientes, :volume
 
-	LIMITE_SUP=22
-	LIMITE_INF=6
+	LIMITE 70
 
-	def initialize(nome)
-		super(nome)
+	def initialize()
 		@subingredientes=[]
-		@preco=0.0
-		@multiplicador=1
-
-		Thread.new do
-			while true
-				if LIMITE_INF > Time.now.hour or  Time.now.hour >  LIMITE_SUP
-					@multiplicador=2
-				else
-					@multiplicador=1
-				end
-			end
-			notify_observers(total)
-		end
-	end
-
-	def total
-		@preco * @multiplicador
+		@volume=0.0
 	end
 
 	def adicionar_subingrediente(subingrediente)
 		@subingredientes << subingrediente
-		@preco += subingrediente.preco
+		@volume += subingrediente.volume
+		changed
+		notify_observers(volume)
 	end
 
 	def remover_subingrediente(subingrediente)
 		@subingredientes.delete(subingrediente)
-		@preco -= subingrediente.preco
+		@volume -= subingrediente.volume
+		@volume=0 if @volume<0
+		changed
+		notify_observers(volume)
+	end
+
+	def consumiu
+		@volume-=rand(LIMITE)+1
+		@volume=0 if @volume<0
+		changed
+		notify_observers(volume)
 	end
 
 end
 
 
-
-
-class Drink < Composto
-	def initialize
-		super('Drink')
+class Bebida < Composto
+	@tipo_bebida=Suco.new
+	def initialize(tipo_bebida = nil)
+		@tipo_bebida ||= tipo_bebida
+		@subingredientes+=@tipo_bebida.montar
+		@volume+=@tipo_bebida.volume
 	end
 
+	def fazer_bebida
+		@tipo_bebida.fazer_bebida()
+	end
 end
-
-
-
-
-
