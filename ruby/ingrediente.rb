@@ -48,5 +48,8 @@ class Azeitona < Ingrediente
 
 end
 
-
-
+class LeiteCondensado < Ingrediente
+	def volume
+		40
+	end
+end

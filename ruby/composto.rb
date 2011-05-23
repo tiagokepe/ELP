@@ -1,27 +1,34 @@
 #!/usr/bin/ruby
 
-require 'tarefa.rb'
-require 'observer'
+require 'ingrediente.rb'
+require "observer"
+require 'observador'
 
 
 class Composto < Ingrediente
 	
 	include Observable
 
-	attr_reader :subingredientes, :volume
+	attr_reader :subingredientes, :volume, :preparador
 
-	LIMITE 70
+	LIMITE=70
 
-	def initialize()
+
+	def initialize(prep = nil)
 		@subingredientes=[]
 		@volume=0.0
+		
+		if prep
+			@preparador=prep
+			@preparador.montar.each {|ingrediente| self.adicionar_subingrediente(ingrediente) }
+		end
 	end
 
 	def adicionar_subingrediente(subingrediente)
 		@subingredientes << subingrediente
 		@volume += subingrediente.volume
 		changed
-		notify_observers(volume)
+		notify_observers(@volume)
 	end
 
 	def remover_subingrediente(subingrediente)
@@ -29,28 +36,16 @@ class Composto < Ingrediente
 		@volume -= subingrediente.volume
 		@volume=0 if @volume<0
 		changed
-		notify_observers(volume)
+		notify_observers(@volume)
 	end
 
 	def consumiu
 		@volume-=rand(LIMITE)+1
 		@volume=0 if @volume<0
 		changed
-		notify_observers(volume)
+		notify_observers(@volume)
 	end
 
 end
 
 
-class Bebida < Composto
-	@tipo_bebida=Suco.new
-	def initialize(tipo_bebida = nil)
-		@tipo_bebida ||= tipo_bebida
-		@subingredientes+=@tipo_bebida.montar
-		@volume+=@tipo_bebida.volume
-	end
-
-	def fazer_bebida
-		@tipo_bebida.fazer_bebida()
-	end
-end

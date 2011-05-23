@@ -1,12 +1,23 @@
 #!/usr/bin/ruby
 
-require 'tarefa_composta.rb'
+require 'composto.rb'
+require 'strategy.rb'
+require 'observador.rb'
 
 
-@drink = Drink.new
 
-@drink.adicionar_subingrediente(Vodka.new)
-@drink.adicionar_subingrediente(Gelo.new)
-@drink.adicionar_subingrediente(Azeitona.new)
 
-puts @drink.total
+preparacao = PreparadorDrink.new
+
+
+bebida = Composto.new(preparacao)
+
+observador= Observador.new(bebida)
+
+puts "Sua bebida tem inicialmente: "+bebida.volume.to_s
+
+
+
+while bebida.volume > 0 do
+	bebida.consumiu
+end
