@@ -9,14 +9,15 @@ class Composto < Ingrediente
 	
 	include Observable
 
-	attr_reader :subingredientes, :volume, :preparador
+	attr_reader :subingredientes, :volume, :preparador, :identificador
 
 	LIMITE=70
 
 
-	def initialize(prep = nil)
+	def initialize(prep = nil, ident = -1)
 		@subingredientes=[]
 		@volume=0.0
+		@identificador=ident
 		
 		if prep
 			@preparador=prep
@@ -28,7 +29,7 @@ class Composto < Ingrediente
 		@subingredientes << subingrediente
 		@volume += subingrediente.volume
 		changed
-		notify_observers(@volume)
+		notify_observers(@volume,@identificador)
 	end
 
 	def remover_subingrediente(subingrediente)
@@ -36,14 +37,15 @@ class Composto < Ingrediente
 		@volume -= subingrediente.volume
 		@volume=0 if @volume<0
 		changed
-		notify_observers(@volume)
+		notify_observers(@volume,@identificador)
 	end
 
 	def consumiu
-		@volume-=rand(LIMITE)+1
+		random = rand(LIMITE) +1
+		@volume-=random
 		@volume=0 if @volume<0
 		changed
-		notify_observers(@volume)
+		notify_observers(@volume,@identificador)
 	end
 
 end

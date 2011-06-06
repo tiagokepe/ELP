@@ -7,17 +7,21 @@ require 'observador.rb'
 
 
 
-preparacao = PreparadorDrink.new
+@bebidas=[]
 
+for i in (1..5)
 
-bebida = Composto.new(preparacao)
+	preparacao = PreparadorDrink.new
+	@bebidas<<Composto.new(preparacao,i)
+end
 
-observador= Observador.new(bebida)
+observador= Observador.new(@bebidas)
+while @bebidas.size > 0 do
+    print "\e[H\e[2J"
 
-puts "Sua bebida tem inicialmente: "+bebida.volume.to_s
-
-
-
-while bebida.volume > 0 do
-	bebida.consumiu
+	@bebidas.each {|bebida| 
+		bebida.consumiu
+	}
+	@bebidas.delete_if {|bebida| bebida.volume == 0 }
+	sleep 1
 end
